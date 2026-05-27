@@ -3,142 +3,142 @@ import API from "../services/api";
 
 function AddVendor() {
 
-  const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    city: "",
-    price: "",
-    image: "",
-  });
-
-  const handleChange = (e) => {
-
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-
-    try {
-
-      const res = await API.post(
-        "/vendors",
-        formData
-      );
-
-      alert(res.data.message);
-
-      setFormData({
+    const [formData, setFormData] = useState({
         name: "",
         category: "",
         city: "",
         price: "",
         image: "",
-      });
+    });
 
-    } catch (error) {
+    const handleChange = (e) => {
 
-      alert(error.response.data.message);
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-    }
-  };
+    const handleSubmit = async (e) => {
 
-  return (
-    <div className="min-h-screen bg-pink-50 flex items-center justify-center">
+        e.preventDefault();
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-10 rounded-3xl shadow-xl w-[500px]"
-      >
+        try {
 
-        <h2 className="text-3xl font-bold text-center text-pink-600 mb-8">
-          Add Vendor
-        </h2>
+            const res = await API.post(
+                "/vendors",
+                formData
+            );
 
-       <input
-  type="file"
-  onChange={async (e) => {
+            alert(res.data.message);
 
-    const file = e.target.files[0];
+            setFormData({
+                name: "",
+                category: "",
+                city: "",
+                price: "",
+                image: "",
+            });
 
-    const data = new FormData();
+        } catch (error) {
 
-    data.append("image", file);
+            alert(error.response.data.message);
 
-    try {
+        }
+    };
 
-      const res = await API.post(
-        "/upload",
-        data
-      );
+    return (
+        <div className="min-h-screen bg-pink-50 flex items-center justify-center">
 
-      setFormData({
-        ...formData,
-        image: res.data.imageUrl,
-      });
+            <form
+                onSubmit={handleSubmit}
+                className="bg-white p-10 rounded-3xl shadow-xl w-[500px]"
+            >
 
-      alert("Image uploaded successfully");
+                <h2 className="text-3xl font-bold text-center text-pink-600 mb-8">
+                    Add Vendor
+                </h2>
 
-    } catch (error) {
+                <input
+                    type="file"
+                    onChange={async (e) => {
 
-      console.log(error);
+                        const file = e.target.files[0];
 
-    }
-  }}
-  className="w-full border p-3 rounded-xl mb-6"
-/>
+                        const data = new FormData();
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          className="w-full border p-3 rounded-xl mb-4"
-        />
+                        data.append("image", file);
 
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          value={formData.city}
-          onChange={handleChange}
-          className="w-full border p-3 rounded-xl mb-4"
-        />
+                        try {
 
-        <input
-          type="text"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          className="w-full border p-3 rounded-xl mb-4"
-        />
+                            const res = await API.post(
+                                "/upload",
+                                data
+                            );
 
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
-          className="w-full border p-3 rounded-xl mb-6"
-        />
+                            setFormData({
+                                ...formData,
+                                image: res.data.imageUrl,
+                            });
 
-        <button
-          type="submit"
-          className="w-full bg-pink-600 text-white py-3 rounded-xl hover:bg-pink-700"
-        >
-          Add Vendor
-        </button>
+                            alert("Image uploaded successfully");
 
-      </form>
+                        } catch (error) {
 
-    </div>
-  );
+                            console.log(error);
+
+                        }
+                    }}
+                    className="w-full border p-3 rounded-xl mb-6"
+                />
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Vendor Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full border p-3 rounded-xl mb-4"
+                />
+
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="w-full border p-3 rounded-xl mb-4"
+                />
+
+                <input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="w-full border p-3 rounded-xl mb-4"
+                />
+
+                <input
+                    type="text"
+                    name="price"
+                    placeholder="Price"
+                    value={formData.price}
+                    onChange={handleChange}
+                    className="w-full border p-3 rounded-xl mb-4"
+                />
+
+                <button
+                    type="submit"
+                    className="w-full bg-pink-600 text-white py-3 rounded-xl hover:bg-pink-700"
+                >
+                    Add Vendor
+                </button>
+
+            </form>
+
+        </div>
+    );
 }
 
 export default AddVendor;
